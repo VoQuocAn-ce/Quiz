@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SBA301 - The Dark Fantasy Arcanum | 10 Master Quizzes</title>
+  <link rel="stylesheet" href="css/dark_fantasy_theme.css">
+</head>
+<body>
+
+  <!-- Ambient Background Particle Canvas -->
+  <canvas id="particles-canvas"></canvas>
+  <div class="abyss-ambient-glow glow-top-right"></div>
+  <div class="abyss-ambient-glow glow-bottom-left"></div>
+
+  <div class="app-container">
+
+    <!-- PORTAL VIEW (Main Hub for selecting Quizzes) -->
+    <div id="portal-view">
+      <!-- Top Action Bar -->
+      <div style="display: flex; justify-content: flex-end; align-items: center; gap: 12px; margin-bottom: 5px;">
+        <button id="btn-portal-theme" class="btn-tool" style="border-radius: 20px; font-weight: 700; padding: 8px 18px; cursor: pointer;">
+          <span id="theme-icon">☀️</span> <span id="theme-label">Giao diện Sáng (Cyan)</span>
+        </button>
+      </div>
+
+      <header class="header-grimoire">
+        <div class="grimoire-sigil">🔮</div>
+        <div class="grimoire-badge">The Arcane Knowledge Repository</div>
+        <h1 class="grimoire-title">SBA301 <span>ARCANUM</span> QUIZ</h1>
+        <p class="grimoire-subtitle">
+          Khám phá 10 hầm ngục tri thức tối thượng bao quát trọn vẹn 22 Chapters trong giáo trình SBA301 (Spring Boot & ReactJS).
+          Thử thách tư duy với câu hỏi tiếng Anh chuẩn mực, nhận gợi ý và giải thích đa chiều chuyên sâu bằng tiếng Việt.
+        </p>
+
+        <div class="runic-divider">
+          <span class="runic-divider-icon">⚔️</span>
+        </div>
+      </header>
+
+      <!-- Overall Performance HUD -->
+      <section class="stats-hud">
+        <div class="hud-card">
+          <div class="hud-header">
+            <span class="hud-label">Tổng số thử thách</span>
+            <span class="hud-icon">📜</span>
+          </div>
+          <div class="hud-value">10 Quests</div>
+          <div class="hud-sub">22 Slide Chapters toàn diện</div>
+        </div>
+
+        <div class="hud-card">
+          <div class="hud-header">
+            <span class="hud-label">Ngân hàng câu hỏi</span>
+            <span class="hud-icon">⚡</span>
+          </div>
+          <div class="hud-value" id="hud-total-q">180 Câu</div>
+          <div class="hud-sub">18 câu chuyên sâu mỗi Quiz</div>
+        </div>
+
+        <div class="hud-card">
+          <div class="hud-header">
+            <span class="hud-label">Tiến trình đã làm</span>
+            <span class="hud-icon">💎</span>
+          </div>
+          <div class="hud-value" id="hud-completed-count">0 / 10</div>
+          <div class="hud-sub" id="hud-answered-total">0 câu đã hoàn thành</div>
+        </div>
+
+        <div class="hud-card">
+          <div class="hud-header">
+            <span class="hud-label">Cấp bậc Pháp sư</span>
+            <span class="hud-icon">👑</span>
+          </div>
+          <div class="hud-value" id="hud-rank-title" style="font-size: 19px; color: var(--gold-rune);">Apprentice</div>
+          <div class="hud-sub" id="hud-avg-acc">Tỷ lệ chính xác: 0%</div>
+        </div>
+      </section>
+
+      <!-- Category Filter Tabs -->
+      <div class="portal-tabs">
+        <button class="portal-tab-btn active" data-cat="all">⚡ Tất cả 10 Quests</button>
+        <button class="portal-tab-btn" data-cat="react">🛡️ React Frontend (Q1 - Q4)</button>
+        <button class="portal-tab-btn" data-cat="fullstack">🌌 Routing & Caching (Q5 - Q6)</button>
+        <button class="portal-tab-btn" data-cat="backend">⚔️ Spring Boot Backend (Q7 - Q8)</button>
+        <button class="portal-tab-btn" data-cat="persistence">🔥 Hibernate & DevOps (Q9 - Q10)</button>
+      </div>
+
+      <!-- Quests Grid -->
+      <main class="quests-grid" id="quests-container">
+        <!-- Rendered dynamically by JavaScript -->
+      </main>
+
+      <!-- Footer Reset Bar -->
+      <footer style="margin-top: 50px; text-align: center; font-size: 13px; color: var(--text-muted); border-top: 1px dashed rgba(120, 227, 241, 0.2); padding-top: 25px;">
+        <p>Hệ thống tự động lưu trữ tiến trình học tập vào Trình duyệt cục bộ (localStorage).</p>
+        <button id="btn-reset-all" style="margin-top: 10px; background: transparent; border: 1px solid rgba(239, 68, 68, 0.4); color: #f87171; padding: 6px 14px; border-radius: 6px; font-size: 12px; cursor: pointer;">
+          🗑️ Đặt lại toàn bộ tiến trình (Reset Progress)
+        </button>
+      </footer>
+    </div>
+
+    <!-- ARENA VIEW (Full Quiz Runner Component) -->
+    <div id="arena-view" class="arena-container">
+      <!-- Injected dynamically by QuizEngine -->
+    </div>
+
+  </div>
+
+  <!-- Scripts: Metadata, Datasets and Engine -->
+  <script src="js/data/quizzes_meta.js"></script>
+  <script src="js/data/quiz1_data.js"></script>
+  <script src="js/data/quiz2_data.js"></script>
+  <script src="js/data/quiz3_data.js"></script>
+  <script src="js/data/quiz4_data.js"></script>
+  <script src="js/data/quiz5_data.js"></script>
+  <script src="js/data/quiz6_data.js"></script>
+  <script src="js/data/quiz7_data.js"></script>
+  <script src="js/data/quiz8_data.js"></script>
+  <script src="js/data/quiz9_data.js"></script>
+  <script src="js/data/quiz10_data.js"></script>
+  <script src="js/quiz_engine.js"></script>
+
+  <script>
+    // Initialize Particles Background
+    new ParticlesBackground('particles-canvas');
+
+    // Quiz Data Registry Map
+    const QUIZ_DATA_MAP = {
+      1: QUIZ_1_DATA,
+      2: QUIZ_2_DATA,
+      3: QUIZ_3_DATA,
+      4: QUIZ_4_DATA,
+      5: QUIZ_5_DATA,
+      6: QUIZ_6_DATA,
+      7: QUIZ_7_DATA,
+      8: QUIZ_8_DATA,
+      9: QUIZ_9_DATA,
+      10: QUIZ_10_DATA
+    };
+
+    let activeEngine = null;
+
+    // Load and update Overall HUD
+    function updatePortalHUD() {
+      const progress = JSON.parse(localStorage.getItem('sba301_all_progress') || '{}');
+      let completedQuizzes = 0;
+      let totalAnswered = 0;
+      let totalScore = 0;
+
+      QUIZZES_METADATA.forEach(meta => {
+        if (progress[meta.id] && progress[meta.id].answeredTotal > 0) {
+          totalAnswered += progress[meta.id].answeredTotal;
+          totalScore += progress[meta.id].score;
+          if (progress[meta.id].answeredTotal >= meta.questionCount) {
+            completedQuizzes++;
+          }
+        }
+      });
+
+      document.getElementById('hud-completed-count').textContent = `${completedQuizzes} / 10`;
+      document.getElementById('hud-answered-total').textContent = `${totalAnswered} / 180 câu đã làm`;
+
+      let avgAcc = totalAnswered > 0 ? Math.round((totalScore / totalAnswered) * 100) : 0;
+      document.getElementById('hud-avg-acc').textContent = `Tỷ lệ chính xác: ${avgAcc}%`;
+
+      let rankTitle = 'Apprentice Alchemist';
+      if (completedQuizzes >= 9 && avgAcc >= 90) rankTitle = '👑 Grand Archmage';
+      else if (completedQuizzes >= 6 && avgAcc >= 75) rankTitle = '⚔️ Master Sorcerer';
+      else if (completedQuizzes >= 3 && avgAcc >= 60) rankTitle = '💎 Adept Mage';
+      else if (completedQuizzes >= 1) rankTitle = '🔮 Arcane Scholar';
+      document.getElementById('hud-rank-title').textContent = rankTitle;
+    }
+
+    // Render Quest Cards Grid
+    function renderQuestCards(filterCat = 'all') {
+      const container = document.getElementById('quests-container');
+      const progress = JSON.parse(localStorage.getItem('sba301_all_progress') || '{}');
+
+      const filtered = filterCat === 'all' 
+        ? QUIZZES_METADATA 
+        : QUIZZES_METADATA.filter(q => q.category === filterCat);
+
+      container.innerHTML = filtered.map(meta => {
+        const p = progress[meta.id] || { score: 0, answeredTotal: 0, percentage: 0 };
+        const percent = p.percentage || 0;
+        const isDone = p.answeredTotal >= meta.questionCount;
+
+        return `
+          <div class="quest-card" data-quiz-id="${meta.id}">
+            <div class="quest-badge-row">
+              <span class="quest-num-pill">QUEST ${meta.id < 10 ? '0' + meta.id : meta.id}</span>
+              <span class="quest-chapters-badge">${meta.chapters}</span>
+            </div>
+
+            <div class="quest-realm">
+              <span>${meta.icon}</span> ${meta.realm}
+            </div>
+
+            <h3 class="quest-title">${meta.title}</h3>
+            <p class="quest-desc">${meta.description}</p>
+
+            <div class="quest-meta-bar">
+              <div class="quest-meta-item">
+                <span>⚡</span> ${meta.questionCount} Questions
+              </div>
+              <div class="quest-meta-item">
+                <span>⏱️</span> ${meta.duration}
+              </div>
+              <div class="quest-meta-item" style="color: var(--cyan-primary);">
+                <span>🛡️</span> ${meta.difficulty}
+              </div>
+            </div>
+
+            <div class="quest-progress-box">
+              <div class="progress-label-row">
+                <span>Tiến trình: ${p.answeredTotal}/${meta.questionCount}</span>
+                <span style="color: ${isDone ? 'var(--success-emerald)' : 'var(--cyan-glow)'}; font-weight: 600;">
+                  ${isDone ? '✓ Hoàn thành (' + p.score + '/' + meta.questionCount + ' - ' + percent + '%)' : percent + '%'}
+                </span>
+              </div>
+              <div class="progress-track">
+                <div class="progress-fill" style="width: ${percent}%;"></div>
+              </div>
+            </div>
+
+            <div style="display: flex; gap: 10px;">
+              <button class="btn-enter-quest btn-launch-arena" data-id="${meta.id}">
+                <span>⚔️</span> ${isDone ? 'Luyện tập lại' : 'Vào Làm Quiz'}
+              </button>
+              <a href="${meta.file}" class="btn-tool" style="text-decoration: none; padding: 12px 14px; border-radius: var(--radius-md);" title="Mở trang độc lập">
+                🔗
+              </a>
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      // Attach Launch Arena Handlers
+      container.querySelectorAll('.btn-launch-arena').forEach(btn => {
+        btn.onclick = () => {
+          const quizId = parseInt(btn.getAttribute('data-id'), 10);
+          launchArena(quizId);
+        };
+      });
+    }
+
+    // Launch Arena View
+    function launchArena(quizId) {
+      const meta = QUIZZES_METADATA.find(q => q.id === quizId);
+      const questions = QUIZ_DATA_MAP[quizId];
+      if (!meta || !questions) return;
+
+      document.getElementById('portal-view').style.display = 'none';
+      const arenaNode = document.getElementById('arena-view');
+      arenaNode.classList.add('active');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+
+      activeEngine = new QuizEngine({
+        quizMeta: meta,
+        questions: questions,
+        container: arenaNode,
+        onExit: () => {
+          arenaNode.classList.remove('active');
+          document.getElementById('portal-view').style.display = 'block';
+          updatePortalHUD();
+          renderQuestCards();
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+      });
+    }
+
+    // Filter Tabs
+    document.querySelectorAll('.portal-tab-btn').forEach(btn => {
+      btn.onclick = () => {
+        document.querySelectorAll('.portal-tab-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        const cat = btn.getAttribute('data-cat');
+        renderQuestCards(cat);
+      };
+    });
+
+    // Reset Progress
+    document.getElementById('btn-reset-all').onclick = () => {
+      if (confirm('Bạn có chắc muốn đặt lại toàn bộ điểm số và tiến trình của tất cả 10 bài Quiz?')) {
+        localStorage.removeItem('sba301_all_progress');
+        updatePortalHUD();
+        renderQuestCards();
+      }
+    };
+
+    // Theme Management (Defaults to 'luminous' bright cyan!)
+    const savedTheme = localStorage.getItem('sba301_theme') || 'luminous';
+    document.body.setAttribute('data-theme', savedTheme);
+    function syncPortalThemeUI(t) {
+      const isLuminous = t !== 'abyss';
+      const icon = document.getElementById('theme-icon');
+      const label = document.getElementById('theme-label');
+      if (icon && label) {
+        icon.textContent = isLuminous ? '☀️' : '🌙';
+        label.textContent = isLuminous ? 'Giao diện Sáng (Cyan)' : 'Giao diện Tối (Abyss)';
+      }
+    }
+    syncPortalThemeUI(savedTheme);
+
+    const portalThemeBtn = document.getElementById('btn-portal-theme');
+    if (portalThemeBtn) {
+      portalThemeBtn.onclick = () => {
+        const current = document.body.getAttribute('data-theme') || 'luminous';
+        const next = current === 'abyss' ? 'luminous' : 'abyss';
+        document.body.setAttribute('data-theme', next);
+        localStorage.setItem('sba301_theme', next);
+        syncPortalThemeUI(next);
+      };
+    }
+
+    // Initial load
+    updatePortalHUD();
+    renderQuestCards();
+  </script>
+</body>
+</html>

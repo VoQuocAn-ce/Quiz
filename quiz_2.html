@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quiz 2: React-Bootstrap & UI Layout Architecture | SBA301 Arcanum</title>
+  <link rel="stylesheet" href="css/dark_fantasy_theme.css">
+</head>
+<body>
+
+  <!-- Ambient Particles Background -->
+  <canvas id="particles-canvas"></canvas>
+  <div class="abyss-ambient-glow glow-top-right"></div>
+  <div class="abyss-ambient-glow glow-bottom-left"></div>
+
+  <div class="app-container">
+    <div id="arena-standalone" class="arena-container active">
+      <!-- Injected by QuizEngine -->
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="js/data/quizzes_meta.js"></script>
+  <script src="js/data/quiz2_data.js"></script>
+  <script src="js/quiz_engine.js"></script>
+  <script>
+    const savedTheme = localStorage.getItem('sba301_theme') || 'luminous';
+    document.body.setAttribute('data-theme', savedTheme);
+
+    new ParticlesBackground('particles-canvas');
+
+    const meta = QUIZZES_METADATA.find(q => q.id === 2);
+    const questions = QUIZ_2_DATA;
+
+    const engine = new QuizEngine({
+      quizMeta: meta,
+      questions: questions,
+      container: document.getElementById('arena-standalone'),
+      onExit: () => {
+        window.location.href = 'index.html';
+      }
+    });
+  </script>
+</body>
+</html>
