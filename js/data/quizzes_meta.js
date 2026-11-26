@@ -174,6 +174,40 @@ const QUIZZES_METADATA = [
     duration: "35 mins",
     difficulty: "Archmage",
     description: "Spring Security 6, JWT Authentication/Authorization, BCrypt, SecurityFilterChain, @PreAuthorize, NoSQL MongoDB Document Model, BSON, Spring Data Mongo, Spring Boot Actuator, Docker & DevOps."
+  },
+  {
+    id: 11,
+    file: "quiz_11.html",
+    dataFile: "js/data/quiz11_data.js",
+    dataVar: "QUIZ_11_DATA",
+    title: "MongoDB & Spring Data NoSQL Mastery (60 Qs)",
+    realm: "Realm XI: The Deep Vault of BSON & NoSQL",
+    icon: "🍃",
+    tag: "MongoDB 60-Question Marathon",
+    category: "marathon",
+    chapters: "Chapter 19, 20 & 21 (Deep Dive)",
+    badge: "Ch 19-21 • 60 Qs",
+    questionCount: 60,
+    duration: "60 mins",
+    difficulty: "Grand Archmage",
+    description: "Thử thách 60 câu chuyên sâu toàn diện về MongoDB: BSON vs JSON, ObjectId 12-byte, CRUD & Query/Update Operators, Indexing & ESR Rule, Replica Sets, Sharding, Aggregation Pipeline & Spring Data MongoDB."
+  },
+  {
+    id: 12,
+    file: "quiz_12.html",
+    dataFile: "js/data/quiz12_data.js",
+    dataVar: "QUIZ_12_DATA",
+    title: "Git Version Control Mastery (60 Qs)",
+    realm: "Realm XII: The Chronomancer's Timeline",
+    icon: "🌿",
+    tag: "Git 60-Question Marathon",
+    category: "marathon",
+    chapters: "Chapter 01 (Git Deep Dive)",
+    badge: "Git • 60 Qs",
+    questionCount: 60,
+    duration: "60 mins",
+    difficulty: "Grand Archmage",
+    description: "Thử thách 60 câu làm chủ hoàn toàn Git: Kiến trúc 3 vùng, SHA-1 Snapshots, HEAD, Branching/Merging & Conflict Resolution, Rebase vs Merge, Reset/Revert/Restore, Stash, Reflog, Bisect, Tags & PR Workflows."
   }
 ];
 

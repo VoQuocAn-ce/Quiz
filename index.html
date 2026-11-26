@@ -29,7 +29,7 @@
         <div class="grimoire-badge">The Arcane Knowledge Repository</div>
         <h1 class="grimoire-title">SBA301 <span>ARCANUM</span> QUIZ</h1>
         <p class="grimoire-subtitle">
-          Khám phá 10 hầm ngục tri thức tối thượng bao quát trọn vẹn 22 Chapters trong giáo trình SBA301 (Spring Boot & ReactJS).
+          Khám phá 12 hầm ngục tri thức tối thượng bao quát trọn vẹn 22 Chapters trong giáo trình SBA301 (Spring Boot, ReactJS, MongoDB & Git).
           Thử thách tư duy với câu hỏi tiếng Anh chuẩn mực, nhận gợi ý và giải thích đa chiều chuyên sâu bằng tiếng Việt.
         </p>
 
@@ -45,8 +45,8 @@
             <span class="hud-label">Tổng số thử thách</span>
             <span class="hud-icon">📜</span>
           </div>
-          <div class="hud-value">10 Quests</div>
-          <div class="hud-sub">22 Slide Chapters toàn diện</div>
+          <div class="hud-value" id="hud-total-quests">12 Quests</div>
+          <div class="hud-sub">22 Slide Chapters + Git & MongoDB</div>
         </div>
 
         <div class="hud-card">
@@ -54,8 +54,8 @@
             <span class="hud-label">Ngân hàng câu hỏi</span>
             <span class="hud-icon">⚡</span>
           </div>
-          <div class="hud-value" id="hud-total-q">180 Câu</div>
-          <div class="hud-sub">18 câu chuyên sâu mỗi Quiz</div>
+          <div class="hud-value" id="hud-total-q">300 Câu</div>
+          <div class="hud-sub">18–60 câu chuyên sâu mỗi Quiz</div>
         </div>
 
         <div class="hud-card">
@@ -63,8 +63,8 @@
             <span class="hud-label">Tiến trình đã làm</span>
             <span class="hud-icon">💎</span>
           </div>
-          <div class="hud-value" id="hud-completed-count">0 / 10</div>
-          <div class="hud-sub" id="hud-answered-total">0 câu đã hoàn thành</div>
+          <div class="hud-value" id="hud-completed-count">0 / 12</div>
+          <div class="hud-sub" id="hud-answered-total">0 / 300 câu đã hoàn thành</div>
         </div>
 
         <div class="hud-card">
@@ -79,11 +79,12 @@
 
       <!-- Category Filter Tabs -->
       <div class="portal-tabs">
-        <button class="portal-tab-btn active" data-cat="all">⚡ Tất cả 10 Quests</button>
+        <button class="portal-tab-btn active" data-cat="all">⚡ Tất cả 12 Quests</button>
         <button class="portal-tab-btn" data-cat="react">🛡️ React Frontend (Q1 - Q4)</button>
         <button class="portal-tab-btn" data-cat="fullstack">🌌 Routing & Caching (Q5 - Q6)</button>
         <button class="portal-tab-btn" data-cat="backend">⚔️ Spring Boot Backend (Q7 - Q8)</button>
         <button class="portal-tab-btn" data-cat="persistence">🔥 Hibernate & DevOps (Q9 - Q10)</button>
+        <button class="portal-tab-btn" data-cat="marathon">🍃 MongoDB & Git 60 Câu (Q11 - Q12)</button>
       </div>
 
       <!-- Quests Grid -->
@@ -119,6 +120,8 @@
   <script src="js/data/quiz8_data.js"></script>
   <script src="js/data/quiz9_data.js"></script>
   <script src="js/data/quiz10_data.js"></script>
+  <script src="js/data/quiz11_data.js"></script>
+  <script src="js/data/quiz12_data.js"></script>
   <script src="js/quiz_engine.js"></script>
 
   <script>
@@ -136,7 +139,9 @@
       7: QUIZ_7_DATA,
       8: QUIZ_8_DATA,
       9: QUIZ_9_DATA,
-      10: QUIZ_10_DATA
+      10: QUIZ_10_DATA,
+      11: QUIZ_11_DATA,
+      12: QUIZ_12_DATA
     };
 
     let activeEngine = null;
@@ -147,6 +152,8 @@
       let completedQuizzes = 0;
       let totalAnswered = 0;
       let totalScore = 0;
+      const totalQuests = QUIZZES_METADATA.length;
+      const totalQuestionsAll = QUIZZES_METADATA.reduce((sum, m) => sum + m.questionCount, 0);
 
       QUIZZES_METADATA.forEach(meta => {
         if (progress[meta.id] && progress[meta.id].answeredTotal > 0) {
@@ -158,8 +165,10 @@
         }
       });
 
-      document.getElementById('hud-completed-count').textContent = `${completedQuizzes} / 10`;
-      document.getElementById('hud-answered-total').textContent = `${totalAnswered} / 180 câu đã làm`;
+      document.getElementById('hud-total-quests').textContent = `${totalQuests} Quests`;
+      document.getElementById('hud-total-q').textContent = `${totalQuestionsAll} Câu`;
+      document.getElementById('hud-completed-count').textContent = `${completedQuizzes} / ${totalQuests}`;
+      document.getElementById('hud-answered-total').textContent = `${totalAnswered} / ${totalQuestionsAll} câu đã làm`;
 
       let avgAcc = totalAnswered > 0 ? Math.round((totalScore / totalAnswered) * 100) : 0;
       document.getElementById('hud-avg-acc').textContent = `Tỷ lệ chính xác: ${avgAcc}%`;
